@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DaleProfe — Nuestro Impacto</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --orange:  #FF6B00;
+      --purple:  #7B2D8B;
+      --teal:    #00BFA5;
+      --pink:    #E91E8C;
+      --gray:    #555;
+      --light:   #F7F7F7;
+      --white:   #FFFFFF;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--white);
+      font-family: 'Nunito', sans-serif;
+      height: 100vh;
+      width: 100vw;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── HEADER ── */
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 56px;
+      border-bottom: 2px solid #F0F0F0;
+      flex-shrink: 0;
+      background: var(--white);
+    }
+
+    .logo {
+      height: 44px;
+      object-fit: contain;
+    }
+
+    .header-meta {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 3px;
+    }
+
+    .since-badge {
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--orange);
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    .live-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .live-dot {
+      width: 8px; height: 8px;
+      background: var(--teal);
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%,100% { opacity:1; transform:scale(1); }
+      50%      { opacity:0.3; transform:scale(0.6); }
+    }
+
+    .live-label {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--teal);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .last-updated {
+      font-size: 11px;
+      color: #aaa;
+      font-weight: 400;
+    }
+
+    /* ── MAIN GRID ── */
+    main {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 1.4fr 1fr 1fr;
+      grid-template-rows: 1fr 1fr;
+      gap: 0;
+      min-height: 0;
+    }
+
+    .card {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 32px 44px;
+      border-right: 2px solid #F0F0F0;
+      border-bottom: 2px solid #F0F0F0;
+      position: relative;
+      background: var(--white);
+      transition: background 0.3s;
+    }
+
+    /* Hero: sin borde derecho, span 1 */
+    .card.hero {
+      background: var(--light);
+      padding: 36px 52px;
+    }
+
+    .card-eyebrow {
+      font-size: 13px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #999;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .card-eyebrow::before {
+      content: '▶';
+      font-size: 10px;
+    }
+
+    .card-value {
+      font-size: clamp(44px, 5.5vw, 82px);
+      font-weight: 900;
+      line-height: 1;
+      letter-spacing: -2px;
+      margin-bottom: 6px;
+    }
+
+    .card.hero .card-value {
+      font-size: clamp(48px, 6vw, 92px);
+      color: var(--orange);
+    }
+
+    .card-sub {
+      font-size: 14px;
+      font-weight: 700;
+      color: #666;
+      line-height: 1.4;
+    }
+
+    /* Colores por métrica */
+    .c-orange .card-value { color: var(--orange); }
+    .c-purple .card-value { color: var(--purple); }
+    .c-teal   .card-value { color: var(--teal);   }
+    .c-pink   .card-value { color: var(--pink);   }
+    .c-gray   .card-value { color: #333; }
+
+    /* Línea de color lateral */
+    .card::after {
+      content: '';
+      position: absolute;
+      left: 0; top: 20%; bottom: 20%;
+      width: 4px;
+      border-radius: 0 4px 4px 0;
+    }
+    .c-orange::after { background: var(--orange); }
+    .c-purple::after { background: var(--purple); }
+    .c-teal::after   { background: var(--teal); }
+    .c-pink::after   { background: var(--pink); }
+    .c-gray::after   { background: #ccc; }
+    .hero::after     { display: none; }
+
+    /* Número grande de fondo decorativo */
+    .card-bg-num {
+      position: absolute;
+      right: 20px;
+      bottom: -10px;
+      font-size: 120px;
+      font-weight: 900;
+      opacity: 0.04;
+      color: #000;
+      pointer-events: none;
+      line-height: 1;
+    }
+
+    /* Loading */
+    .loading-screen {
+      flex:1; display:flex; flex-direction:column;
+      align-items:center; justify-content:center; gap:16px;
+      color:#aaa; font-size:16px; font-weight:700;
+    }
+    .spinner {
+      width:40px; height:40px;
+      border:4px solid #eee;
+      border-top-color: var(--orange);
+      border-radius:50%;
+      animation:spin 0.8s linear infinite;
+    }
+    @keyframes spin { to { transform:rotate(360deg); } }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 10px 0;
+      font-size: 11px;
+      color: #ccc;
+      font-weight: 600;
+      flex-shrink: 0;
+      border-top: 1px solid #F0F0F0;
+    }
+
+    @keyframes fadeUp {
+      from { opacity:0; transform:translateY(16px); }
+      to   { opacity:1; transform:translateY(0); }
+    }
+    .card { animation: fadeUp 0.5s ease forwards; }
+    .card:nth-child(1) { animation-delay: 0s; }
+    .card:nth-child(2) { animation-delay: 0.08s; }
+    .card:nth-child(3) { animation-delay: 0.16s; }
+    .card:nth-child(4) { animation-delay: 0.24s; }
+    .card:nth-child(5) { animation-delay: 0.32s; }
+    .card:nth-child(6) { animation-delay: 0.40s; }
+  </style>
+</head>
+<body>
+
+<header>
+  <img
+    class="logo"
+    src="https://www.daleprofe.cl/img/logo.svg"
+    alt="daleProfe"
+    onerror="this.style.display='none'; document.getElementById('logoFallback').style.display='block';"
+  />
+  <span id="logoFallback" style="display:none; font-family:Nunito,sans-serif; font-size:26px; font-weight:900; color:#FF6B00;">dale<span style="color:#333">Profe</span></span>
+
+  <div class="header-meta">
+    <div class="since-badge">Nuestro impacto desde 2019</div>
+    <div class="live-row">
+      <div class="live-dot"></div>
+      <span class="live-label">Cifras en vivo</span>
+      <span class="last-updated" id="lastUpdated">· Cargando…</span>
+    </div>
+  </div>
+</header>
+
+<div id="loadingScreen" class="loading-screen">
+  <div class="spinner"></div>
+  <span>Obteniendo cifras desde daleprofe.cl…</span>
+</div>
+
+<main id="mainGrid" style="display:none"></main>
+
+<footer id="footerBar">daleprofe.cl · Se actualiza automáticamente cada 30 minutos</footer>
+
+<script>
+const REFRESH_MS = 30 * 60 * 1000;
+const TARGET = "https://www.daleprofe.cl/nosotros";
+
+// Cifras de respaldo (verificadas 8 junio 2025)
+const FALLBACK = {
+  donaciones:      "$1.029.261.386",
+  donantes:        "8.239",
+  proyFinanciados: "2.191",
+  profesores:      "1.354",
+  colegios:        "705",
+  estudiantes:     "339.544",
+  activos:         "169"
+};
+
+function fetchConTimeout(url, ms) {
+  return new Promise((resolve, reject) => {
+    const t = setTimeout(() => reject(new Error("Timeout")), ms);
+    fetch(url)
+      .then(r => { clearTimeout(t); resolve(r); })
+      .catch(e => { clearTimeout(t); reject(e); });
+  });
+}
+
+const PROXIES = [
+  u => `https://api.allorigins.win/raw?url=${encodeURIComponent(u)}`,
+  u => `https://corsproxy.io/?url=${encodeURIComponent(u)}`,
+  u => `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(u)}`,
+];
+
+function parseStats(html) {
+  const doc = new DOMParser().parseFromString(html, "text/html");
+  const text = (doc.body.innerText || doc.body.textContent || "").replace(/\s+/g, " ");
+  const f = p => { const m = text.match(p); return m ? m[1].trim() : null; };
+  return {
+    donaciones:      f(/Hemos recaudado\s*([\$\d\.\,]+)/i) || f(/([\$\d\.]{8,})\s*a trav/i),
+    donantes:        f(/a trav[eé]s de\s*([\d\.]+)\s*donantes/i),
+    proyFinanciados: f(/([\d\.]+)\s*Proyectos financiados/i),
+    profesores:      f(/([\d\.]+)\s*Profesores beneficiados/i),
+    colegios:        f(/([\d\.]+)\s*Colegios han participado/i),
+    estudiantes:     f(/([\d\.]+)\s*Estudiantes beneficiados/i),
+    activos:         f(/([\d\.]+)\s*Proyectos actualmente/i),
+  };
+}
+
+async function fetchStats() {
+  for (const pFn of PROXIES) {
+    try {
+      const res = await fetchConTimeout(pFn(TARGET), 12000);
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const html = await res.text();
+      if (html.length < 500) throw new Error("Respuesta vacía");
+      const s = parseStats(html);
+      if (s.proyFinanciados || s.donaciones || s.estudiantes) return s;
+      throw new Error("Sin cifras");
+    } catch(e) { console.warn("Proxy falló:", e.message); }
+  }
+  return FALLBACK;
+}
+
+function fmt(v) { return v || "—"; }
+
+function renderCards(s) {
+  const isFallback = (s === FALLBACK);
+  document.getElementById("mainGrid").innerHTML = `
+    <!-- Hero: donaciones -->
+    <div class="card hero c-orange" style="grid-row:span 1;">
+      <div class="card-eyebrow">Hemos recaudado</div>
+      <div class="card-value">${fmt(s.donaciones)}</div>
+      <div class="card-sub">a través de <strong>${fmt(s.donantes)}</strong> donantes de todo el país</div>
+    </div>
+
+    <!-- Proyectos financiados -->
+    <div class="card c-purple">
+      <div class="card-eyebrow">Proyectos financiados</div>
+      <div class="card-value">${fmt(s.proyFinanciados)}</div>
+      <div class="card-sub">Ideas de profes que se hicieron realidad</div>
+      <div class="card-bg-num">${fmt(s.proyFinanciados)}</div>
+    </div>
+
+    <!-- Profesores -->
+    <div class="card c-purple">
+      <div class="card-eyebrow">Profesores beneficiados</div>
+      <div class="card-value">${fmt(s.profesores)}</div>
+      <div class="card-sub">Docentes que pudieron llevar sus ideas al aula</div>
+      <div class="card-bg-num">${fmt(s.profesores)}</div>
+    </div>
+
+    <!-- Estudiantes -->
+    <div class="card c-pink">
+      <div class="card-eyebrow">Estudiantes beneficiados</div>
+      <div class="card-value">${fmt(s.estudiantes)}</div>
+      <div class="card-sub">Niños y jóvenes con nuevas experiencias</div>
+      <div class="card-bg-num">${fmt(s.estudiantes)}</div>
+    </div>
+
+    <!-- Colegios -->
+    <div class="card c-teal">
+      <div class="card-eyebrow">Colegios han participado</div>
+      <div class="card-value">${fmt(s.colegios)}</div>
+      <div class="card-sub">Establecimientos de todo Chile</div>
+      <div class="card-bg-num">${fmt(s.colegios)}</div>
+    </div>
+
+    <!-- Activos -->
+    <div class="card c-orange">
+      <div class="card-eyebrow">Proyectos buscando financiamiento</div>
+      <div class="card-value">${fmt(s.activos)}</div>
+      <div class="card-sub">Proyectos activos ahora mismo — ¡apóyalos!</div>
+      <div class="card-bg-num">${fmt(s.activos)}</div>
+    </div>
+  `;
+
+  document.getElementById("loadingScreen").style.display = "none";
+  document.getElementById("mainGrid").style.display = "grid";
+  if (isFallback) {
+    document.getElementById("footerBar").textContent =
+      "Mostrando últimas cifras conocidas · daleprofe.cl";
+  }
+}
+
+function setStatus(msg) {
+  document.getElementById("lastUpdated").textContent = "· " + msg;
+}
+
+async function refresh() {
+  setStatus("Actualizando…");
+  try {
+    const s = await fetchStats();
+    renderCards(s);
+    const hora = new Date().toLocaleTimeString("es-CL", { hour:"2-digit", minute:"2-digit" });
+    setStatus(`Actualizado a las ${hora}`);
+  } catch(e) {
+    console.error(e);
+    setStatus("Error al conectar — reintentando…");
+    const sinDatos = document.getElementById("mainGrid").style.display === "none";
+    if (sinDatos) setTimeout(refresh, 60000);
+  }
+}
+
+refresh();
+setInterval(refresh, REFRESH_MS);
+</script>
+</body>
+</html>
